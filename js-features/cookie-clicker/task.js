@@ -18,11 +18,8 @@ cookie.onclick = () => {
     }
 
     let nowClickTime = new Date();
-
     let timeSinceLastClick = (nowClickTime - lastClickTime) / 1000;
-
     speed = 1 / timeSinceLastClick;
-    
     clickRate.textContent = speed.toFixed(2);
 
     if (speed > topSpeed) {
@@ -30,7 +27,6 @@ cookie.onclick = () => {
     }
 
     topRate.textContent = topSpeed;
-
     lastClickTime = nowClickTime;
     
 }
