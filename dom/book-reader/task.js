@@ -48,6 +48,25 @@ const size = {
   activeStyle: "font-size_active",
 };
 
+function selectElement(element, data) {
+  if (element.dataset.textColor === data.dataText[0] 
+    || element.dataset.bgColor === data.dataText[0] 
+    || element.dataset.size === data.dataText[0]) {
+    book.classList.add(data.styleList[0]);
+  }
+
+  if (element.dataset.textColor === data.dataText[1] 
+    || element.dataset.bgColor === data.dataText[1]) {
+    book.classList.add(data.styleList[1]);
+  }
+
+  if (element.dataset.textColor === data.dataText[2] 
+    || element.dataset.bgColor === data.dataText[2] 
+    || element.dataset.size === data.dataText[2]) {
+    book.classList.add(data.styleList[2]);
+  }
+}
+
 function bookManagement(data) {
   data.conteiner.forEach((elements) => {
     let elementsChild = [...elements.children];
@@ -56,26 +75,11 @@ function bookManagement(data) {
       if (element.tagName === "A") {
         element.addEventListener("click", (e) => {
           e.preventDefault();
+
           elementsChild.forEach(el => el.classList.remove(data.activeStyle));
           element.classList.add(data.activeStyle);
           book.classList.remove(data.styleList[0], data.styleList[1], data.styleList[2]);
-  
-            if (element.dataset.textColor === data.dataText[0] 
-              || element.dataset.bgColor === data.dataText[0] 
-              || element.dataset.size === data.dataText[0]) {
-              book.classList.add(data.styleList[0]);
-            }
-  
-            if (element.dataset.textColor === data.dataText[1] 
-              || element.dataset.bgColor === data.dataText[1]) {
-              book.classList.add(data.styleList[1]);
-            }
-  
-            if (element.dataset.textColor === data.dataText[2] 
-              || element.dataset.bgColor === data.dataText[2] 
-              || element.dataset.size === data.dataText[2]) {
-              book.classList.add(data.styleList[2]);
-            }
+          selectElement(element, data);
         })
       }
     })
