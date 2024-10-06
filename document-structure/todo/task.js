@@ -22,17 +22,16 @@ function creatingHtmlTags(content) {
 
 function checkingLocalStorage() {
   const savedContent = JSON.parse(localStorage.getItem('contentText'));
+  let content = [];
 
-  if (savedContent !== null) {
+  if (savedContent) {
     content = savedContent;
+    for (let i = 0; i < savedContent.length; i++) {
+      creatingHtmlTags(content[i]);
+    }
   }
 
   localStorage.setItem('contentText', JSON.stringify(content));
-
-  for (let i = 0; i < savedContent.length; i++) {
-    creatingHtmlTags(savedContent[i]);
-  }
-
   addTasks();
   deletingTasks();
 }
@@ -62,11 +61,10 @@ function deletingTasks() {
 function addTasks() {
   button.addEventListener("click", e => {
     e.preventDefault();
-
+    let content = getContent();
+    
     if (input.value) {
-      let content = getContent();
       content.push(input.value.trim());
-
       localStorage.setItem('contentText', JSON.stringify(content));
       creatingHtmlTags(input.value.trim());
       input.value = '';
@@ -75,4 +73,6 @@ function addTasks() {
   })
 }
 
-checkingLocalStorage()
+document.addEventListener("DOMContentLoaded", () => {
+  checkingLocalStorage();
+});
