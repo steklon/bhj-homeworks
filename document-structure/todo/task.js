@@ -1,23 +1,14 @@
 const input = document.getElementById("task__input");
 const button = document.getElementById("tasks__add");
-const tasks = document.getElementById("tasks");
+const tasksList = document.getElementById("tasks__list");
 
-function creatingHtmlTags(content) {
-  let task = document.createElement("div");
-  let taskTitle = document.createElement("div");
-  let taskRemove = document.createElement("a");
-
-  task.classList.add("task");
-  taskTitle.classList.add("task__title");
-  taskRemove.classList.add("task__remove");
-
-  taskRemove.innerHTML = "&times;";
-  taskRemove.href = "#";
-  taskTitle.textContent = content;
-
-  task.appendChild(taskTitle);
-  task.appendChild(taskRemove);
-  tasks.appendChild(task);
+function creatingHtmlTags(title) {
+  return `
+    <div class="task">
+      <div class="task__title">${title}</div>
+      <a href="#" class="task__remove">&times;</a>
+    </div>
+  `
 }
 
 function checkingLocalStorage() {
@@ -27,7 +18,7 @@ function checkingLocalStorage() {
   if (savedContent) {
     content = savedContent;
     for (let i = 0; i < savedContent.length; i++) {
-      creatingHtmlTags(content[i]);
+      tasksList.insertAdjacentHTML('afterbegin', creatingHtmlTags(content[i]));
     }
   }
 
@@ -51,7 +42,7 @@ function deletingTasks() {
   let removeLinks = document.querySelectorAll(".task__remove");
 
   removeLinks.forEach((el) => {
-    el.addEventListener("click", e => {
+    el.addEventListener("click", () => {
       el.parentElement.remove();
       localStorage.setItem('contentText', JSON.stringify(getContent()))
     })
@@ -63,12 +54,14 @@ function addTasks() {
     e.preventDefault();
     let content = getContent();
     
-    if (input.value) {
-      content.push(input.value.trim());
-      localStorage.setItem('contentText', JSON.stringify(content));
-      creatingHtmlTags(input.value.trim());
-      input.value = '';
-      }
+    if (!input.value) {
+      return;
+    }
+
+    content.push(input.value.trim());
+    localStorage.setItem('contentText', JSON.stringify(content));
+    tasksList.insertAdjacentHTML('afterbegin', creatingHtmlTags(input.value.trim()));
+    input.value = '';
     deletingTasks();
   })
 }
