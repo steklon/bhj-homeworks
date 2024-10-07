@@ -18,11 +18,12 @@ hasTooltip.forEach((element) => {
     tooltip.classList.add("tooltip_active");
     getPosition(element, tooltip);
 
-    element.insertAdjacentElement("beforeend", tooltip);
+    element.insertAdjacentElement("afterend", tooltip);
+    console.log(tooltipActive)
 
     if (tooltipActive.length > 1) {
       tooltipActive.forEach(el => el.remove());
-      element.insertAdjacentElement("beforeend", tooltip);
+      element.insertAdjacentElement("afterend", tooltip);
     }
 
     if (tooltipActive.length === 1) {
