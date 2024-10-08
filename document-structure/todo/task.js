@@ -53,14 +53,15 @@ function addTasks() {
   button.addEventListener("click", e => {
     e.preventDefault();
     let content = getContent();
+    let text = input.value.trim();
     
-    if (!input.value) {
+    if (!text) {
       return;
     }
 
-    content.push(input.value.trim());
+    content.push(text);
     localStorage.setItem('contentText', JSON.stringify(content));
-    tasksList.insertAdjacentHTML('afterbegin', creatingHtmlTags(input.value.trim()));
+    tasksList.insertAdjacentHTML('afterbegin', creatingHtmlTags(text));
     input.value = '';
     deletingTasks();
   })
