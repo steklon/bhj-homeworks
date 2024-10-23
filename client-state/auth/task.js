@@ -20,7 +20,6 @@ function logout() {
     welcome.classList.remove('welcome_active');
     signin.classList.add('signin_active');
     button.remove();
-
   })
 }
 
@@ -60,8 +59,6 @@ form.addEventListener('submit', e => {
   })
   .then(data => authorizationCheck(data))
   .catch(err => alert(`ошибка: ${err}`));
-
-
 })
 
 function checkingLocalStorage() {
